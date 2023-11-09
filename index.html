@@ -3,14 +3,15 @@
 
 <head>
     <title>Simulador meteorologia</title>
+    <link rel="stylesheet" href="animations.css">
 </head>
 
 <body>
-    <canvas id="myCanvas" width="500" height="500" style="border:solid 2px black">
+    <canvas class="sun-bg" id="myCanvas" width="500" height="500" style="border:solid 2px black">
         Your browser does not support HTML5 Canvas.
     </canvas><br>
     <button id="rain">CHUVA</button>
-    <button>SOL</button>
+    <button id="sun">SOL</button>
     <button id="snow">NEVE</button>
 
     <script>
@@ -18,122 +19,34 @@
         const ctx = canvas.getContext("2d");
         const W = canvas.width; const H = canvas.height;
 
-        let rain = document.getElementById("rain").addEventListener("click", () => {
-            init();    
-            render();
-            ctx.fillStyle = '#393a41';
-            ctx.fillRect(0, 0, W, H);
-            ctx.drawImage(rainyTree, 140, 192, 200, 208);
-            ctx.drawImage(ground, 0, 400, 500, 100);
-            ctx.drawImage(sun, 10, 10, 120, 122);
-            ctx.drawImage(cloud, 180, 40, 150, 80);
-            ctx.drawImage(cloud, 340, 10, 150, 80);
-            ctx.drawImage(cloud, 10, 10, 150, 80);
-        })
-        let sunnyTree = new Image();
-        sunnyTree.src = 'assets/tree_sunny.png';
-        let snowyTree = new Image();
-        snowyTree.src = 'assets/tree_snow.png';
-        let rainyTree = new Image();
-        rainyTree.src = 'assets/tree_rain.png';
-        let ground = new Image();
-        ground.src = 'assets/ground.jpg';
         let cloud = new Image();
         cloud.src = 'assets/cloud.png';
+
+        let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
+            canvas.classList.remove()
+            canvas.classList.add("sun-bg")
+        })
+
+        let sunnyTree = new Image();
+        sunnyTree.src = 'assets/tree_sunny.png';
+        let ground = new Image();
+        ground.src = 'assets/ground.jpg';
         let sun = new Image();
         sun.src = 'assets/sun.png';
 
-        // sunny rect
-        ctx.fillStyle = '#bde0fe';
-        ctx.fillRect(0, 0, W, H);
-
-        sunnyTree.onload = function () {
+        function sunny(){
             ctx.drawImage(sunnyTree, 140, 192, 200, 208);
-        };
-
-        ground.onload = function () {
             ctx.drawImage(ground, 0, 400, 500, 100);
-        };
-        
-        cloud.onload = function () {
-            ctx.drawImage(cloud, 160, 40, 150, 80);
-            ctx.drawImage(cloud, 340, 10, 150, 80);
-        };
-
-        sun.onload = function () {
             ctx.drawImage(sun, 10, 10, 120, 122);
+        }
+
+        window.onload = function () {
+            sunny()
         };
 
-        let raindrops = new Array();
-
-        class Rain {
-            constructor(x, y, dY, length, speed, color) {
-                this.x = x;
-                this.y = y;
-                this.dY = dY;
-                this.length = length;
-                this.speed = speed;
-                this.color = color;
-            }
-
-            draw() {
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x, this.y + this.length);
-                ctx.stroke();
-            }
-
-            update() {
-                this.y += this.speed;
-                if (this.y > 398){
-                    this.y = 398;
-                    this.speed = 0
-                    this.length = 2
-                }
-            }
-        }
-
-
-        function init() {
-            for (let i = 0; i < 50; i++) {
-                let color = "#00F";
-
-                let cloudY = 80;
-
-                let xInit = Math.random() * W;
-                let yInit = 100;
-                let length = Math.random() * 20 + 10;
-                let speed = Math.random() * 5 + 2
-
-                raindrops.push(new Rain(xInit, yInit, -length, length, speed, color))
-            }
-        }
-
-        function render() {
-            ctx.clearRect(0, 0, W, H);
-
-            ctx.fillStyle = '#393a41';
-            ctx.fillRect(0, 0, W, H);
-
-            ctx.drawImage(rainyTree, 140, 192, 200, 208);
-            ctx.drawImage(sun, 10, 10, 120, 122);
-
-            raindrops.forEach(function (drop) {
-                drop.draw();
-                drop.update();
-            });
-            window.requestAnimationFrame(render);
-
-            ctx.drawImage(ground, 0, 400, 500, 100);
-            ctx.drawImage(ground, 0, 400, 500, 100);
-            ctx.drawImage(cloud, 320, 40, 180, 100);
-            ctx.drawImage(cloud, 160, 10, 180, 100);
-            ctx.drawImage(cloud, 0, 40, 180, 100);
-        }
     </script>
     <script type="module" src="snow.js"></script>
+    <script type="module" src="rain.js"></script>
 </body>
 
 </html>
