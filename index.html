@@ -87,8 +87,10 @@
 
             update() {
                 this.y += this.speed;
-                if (this.y > H){
-                    this.y = -this.length;
+                if (this.y > 398){
+                    this.y = 398;
+                    this.speed = 0
+                    this.length = 2
                 }
             }
         }
@@ -98,8 +100,10 @@
             for (let i = 0; i < 50; i++) {
                 let color = "#00F";
 
+                let cloudY = 80;
+
                 let xInit = Math.random() * W;
-                let yInit = Math.random() * H;
+                let yInit = 100;
                 let length = Math.random() * 20 + 10;
                 let speed = Math.random() * 5 + 2
 
@@ -110,11 +114,23 @@
         function render() {
             ctx.clearRect(0, 0, W, H);
 
+            ctx.fillStyle = '#393a41';
+            ctx.fillRect(0, 0, W, H);
+
+            ctx.drawImage(rainyTree, 140, 192, 200, 208);
+            ctx.drawImage(sun, 10, 10, 120, 122);
+
             raindrops.forEach(function (drop) {
                 drop.draw();
                 drop.update();
             });
             window.requestAnimationFrame(render);
+
+            ctx.drawImage(ground, 0, 400, 500, 100);
+            ctx.drawImage(ground, 0, 400, 500, 100);
+            ctx.drawImage(cloud, 320, 40, 180, 100);
+            ctx.drawImage(cloud, 160, 10, 180, 100);
+            ctx.drawImage(cloud, 0, 40, 180, 100);
         }
     </script>
 </body>
