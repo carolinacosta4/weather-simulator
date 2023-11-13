@@ -15,15 +15,19 @@ cloud.src = 'assets/cloud.png';
 
 let snowButton = document.getElementById("snow");
 snowButton.addEventListener("click", () => {
+    canvas.classList.remove("sun-bg");
+    canvas.classList.add("snow-bg");
     drawBG();
     snowFlakes(); // init
-    letItSnow(); // render
+    setTimeout(letItSnow, 2000);
+    ctx.drawImage(snowyTree, 140, 192, 200, 208);
+    initCloud();
+    renderCloud();
 })
 
 
 function drawBG() {
-    ctx.fillStyle = '#e8e9eb';
-    ctx.fillRect(0, 0, W, H);
+
     ctx.drawImage(ground, 0, 400, 500, 100);
     ctx.drawImage(snowyTree, 140, 192, 200, 208);
     // ctx.drawImage(cloud, 320, 40, 180, 100);
@@ -103,3 +107,55 @@ function letItSnow() {
     window.requestAnimationFrame(letItSnow);
 }
 
+// CLOUDS
+
+let clouds = [];
+
+class Cloud {
+    constructor(startX, stopX, yCloud) {
+        this.x = startX;
+        this.startX = startX; 
+        this.stopX = stopX; 
+        this.yCloud = yCloud;
+    }
+
+    drawCloud() {
+        ctx.drawImage(cloud, this.x, this.yCloud, 180, 100);
+    }
+
+    updateCloud() {
+        if (this.x > this.stopX) {
+            this.x -= 2;
+        }
+    }
+}
+
+function initCloud() {
+    let startX1 = 160; 
+    let startX2 = 320; 
+    let startX3 = 480;
+    let stopX1 = 0; 
+    let stopX2 = 160;
+    let stopX3 = 320;
+
+    let y1 = 40;
+    let y2 = 10;
+
+    clouds.push(new Cloud(startX1, stopX1, y1));
+    clouds.push(new Cloud(startX2, stopX2, y2));
+    clouds.push(new Cloud(startX3, stopX3, y1));
+}
+
+function renderCloud() {
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.drawImage(snowyTree, 140, 192, 200, 208);
+    ctx.drawImage(ground, 0, 400, 500, 100);
+
+    clouds.forEach(function (cloud) {
+        cloud.drawCloud();
+        cloud.updateCloud();
+    });
+
+    window.requestAnimationFrame(renderCloud);
+}
