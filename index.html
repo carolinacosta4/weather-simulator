@@ -7,12 +7,15 @@
 </head>
 
 <body>
-    <canvas class="sun-bg" id="myCanvas" width="500" height="500" style="border:solid 2px black">
-        Your browser does not support HTML5 Canvas.
-    </canvas><br>
-    <button id="rain">CHUVA</button>
-    <button id="sun">SOL</button>
-    <button id="snow">NEVE</button>
+    <div class="container">
+        <canvas class="sun-bg" id="myCanvas" width="500" height="500">
+            Your browser does not support HTML5 Canvas.
+        </canvas><br></div>
+    <div class="buttons">
+        <button id="rain">CHUVA</button>
+        <button id="sun">SOL</button>
+        <button id="snow">NEVE</button>
+    </div>
 
     <script>
         const canvas = document.querySelector('#myCanvas');
@@ -37,7 +40,7 @@
         let sunnyTree = new Image();
         sunnyTree.src = 'assets/tree_sunny.png';
         let ground = new Image();
-        ground.src = 'assets/ground.jpg';
+        ground.src = 'assets/ground_sunny.png';
         let sun = new Image();
         sun.src = 'assets/sun.png';
 

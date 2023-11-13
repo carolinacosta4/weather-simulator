@@ -15,7 +15,7 @@ let rain = document.getElementById("rain").addEventListener("click", () => {
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
 let ground = new Image();
-ground.src = 'assets/ground.jpg';
+ground.src = 'assets/ground_brown.png';
 let sun = new Image();
 sun.src = 'assets/sun.png';
 
