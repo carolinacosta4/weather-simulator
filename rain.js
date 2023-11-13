@@ -2,39 +2,24 @@ const canvas = document.querySelector('#myCanvas');
 const ctx = canvas.getContext("2d");
 const W = canvas.width; const H = canvas.height;
 
-let cloud = new Image();
-cloud.src = 'assets/cloud.png';
-let cloudX1 = 320
-let cloudX2 = 160
-cloud.onload = function(){
-    ctx.drawImage(cloud, cloudX1, 10, 180, 100);
-    ctx.drawImage(cloud, cloudX2, 40, 180, 100);
-}
-
 let rain = document.getElementById("rain").addEventListener("click", () => {
-    canvas.classList.remove("sun-bg")
-    canvas.classList.add("rain-bg")
-    // setInterval(init, 10000);    
-    // setInterval(render, 10000);
-    init()
-    render()
+    canvas.classList.remove("sun-bg");
+    canvas.classList.add("rain-bg");
+    init();
+    setTimeout(render, 2000);
     ctx.drawImage(rainyTree, 140, 192, 200, 208);
-    cloudX1 -= 100
-    cloudX2 -= 100
-    ctx.drawImage(cloud, cloudX1, 10, 180, 100);
-    ctx.drawImage(cloud, cloudX2, 40, 180, 100);
-    initCloud()
-    renderCloud()
+    initCloud();
+    renderCloud();
 })
 
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
 let ground = new Image();
-ground.src = 'assets/ground.jpg';
+ground.src = 'assets/ground_brown.png';
 let sun = new Image();
 sun.src = 'assets/sun.png';
 
-let raindrops = new Array();
+let raindrops = [];
 
 class Rain {
     constructor(x, y, dY, length, speed, color) {
@@ -59,22 +44,25 @@ class Rain {
         this.y += this.speed;
         if (this.y > 398){
             this.y = 398;
-            this.speed = 0
-            this.length = 2
+            this.speed = 0;
+            this.length = 2;
+            waterLevel += 0.1;
         }
     }
 }
 
+let waterLevel = 0;
+
 function init() {
     for (let i = 0; i < 1; i++) {
-        let color = "#00F";
+        let color = "blue";
 
         let xInit = Math.random() * W;
         let yInit = 100;
         let length = Math.random() * 20 + 10;
-        let speed = Math.random() * 5 + 2
+        let speed = Math.random() * 5 + 2;
 
-        raindrops.push(new Rain(xInit, yInit, -length, length, speed, color))
+        raindrops.push(new Rain(xInit, yInit, -length, length, speed, color));
     }
 }
 
@@ -84,12 +72,16 @@ function render() {
     ctx.drawImage(rainyTree, 140, 192, 200, 208);
     ctx.drawImage(sun, 10, 10, 120, 122);
 
-    init()
+    init();
 
     raindrops.forEach(function (drop) {
         drop.draw();
         drop.update();
     });
+
+    ctx.fillStyle = "blue";
+    ctx.fillRect(0, H - waterLevel, W, waterLevel);
+
     window.requestAnimationFrame(render);
 
     ctx.drawImage(ground, 0, 400, 500, 100);
@@ -98,39 +90,54 @@ function render() {
     ctx.drawImage(cloud, 0, 40, 180, 100);
 }
 
-// let clouds = []
+let clouds = [];
 
-// class Cloud {
-//     constructor(x) {
-//         this.x = x;
-//     }
+class Cloud {
+    constructor(startX, stopX, y) {
+        this.x = startX;
+        this.startX = startX; 
+        this.stopX = stopX; 
+        this.y = y;
+    }
 
-//     drawCloud() {
-//         ctx.drawImage(cloud, this.x, 10, 120, 122);
-//         ctx.drawImage(cloud, this.x, 10, 120, 122);
-//     }
+    drawCloud() {
+        ctx.drawImage(cloud, this.x, this.y, 180, 100);
+    }
 
-//     updateCloud() {
-//         this.x += 2;
-//     }
-// }
+    updateCloud() {
+        if (this.x > this.stopX) {
+            this.x -= 2;
+        }
+    }
+}
 
-// function initCloud() {
-//     for (let i = 0; i < 1; i++) {
-//         let xInit = Math.random() * W;
+function initCloud() {
+    let startX1 = 160; 
+    let startX2 = 320; 
+    let startX3 = 480;
+    let stopX1 = 0; 
+    let stopX2 = 160;
+    let stopX3 = 320;
 
-//         clouds.push(new Cloud(xInit))
-//     }
-// }
+    let y1 = 40;
+    let y2 = 10;
 
-// function renderCloud() {
-//     ctx.clearRect(0, 0, W, H);
+    clouds.push(new Cloud(startX1, stopX1, y1));
+    clouds.push(new Cloud(startX2, stopX2, y2));
+    clouds.push(new Cloud(startX3, stopX3, y1));
+}
 
-//     clouds.forEach(function (cloud) {
-//         cloud.drawCloud();
-//         cloud.updateCloud();
-//     });
-    
-// }
+function renderCloud() {
+    ctx.clearRect(0, 0, W, H);
 
-window.requestAnimationFrame(renderCloud)
+    ctx.drawImage(rainyTree, 140, 192, 200, 208);
+    ctx.drawImage(sun, 10, 10, 120, 122);
+    ctx.drawImage(ground, 0, 400, 500, 100);
+
+    clouds.forEach(function (cloud) {
+        cloud.drawCloud();
+        cloud.updateCloud();
+    });
+
+    window.requestAnimationFrame(renderCloud);
+}

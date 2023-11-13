@@ -1,3 +1,14 @@
+.container{
+    display: grid;
+    justify-content: center;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .rain-bg{
     background-color: #393a41;
 }
