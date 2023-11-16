@@ -40,7 +40,7 @@ document.getElementById("rain").addEventListener("click", () => {
     // render()
     setTimeout(render, 2000);
     ctx.drawImage(rainyTree, 140, 192, 200, 208);
-    ctx.drawImage(thunder, 50, 50)
+    // ctx.drawImage(thunder, 50, 50)
     initCloud()
     renderCloud()
     flashInterval = setInterval(flashEffect, 3000)
@@ -53,6 +53,7 @@ snowButton.addEventListener("click", () => {
     velocity = 0
     canvas.classList.remove("sun-bg");
     canvas.classList.remove("rain-bg");
+    canvas.classList.remove("flash-bg");
     canvas.classList.add("snow-bg");
     snowFlakes(); // init
     // render()
@@ -181,23 +182,27 @@ function resetAnimation() {
 }
 
 function flashEffect(){
-    canvas.style.backgroundColor = "white";
-    ctx.drawImage(thunder, 200, 200)
-    setTimeout(() => {
-        canvas.style.backgroundColor = "";
-        canvas.classList.add("rain-bg");
-        ctx.clearRect(50, 50, 400, 300);
-    }, 100)
-
-    setTimeout(() => {
+    if(weather == "rain"){
         canvas.style.backgroundColor = "white";
-        canvas.classList.add("rain-bg");
-        ctx.clearRect(50, 50, 400, 300);
-    }, 150)
+        ctx.drawImage(thunder, 200, 200)
+        setTimeout(() => {
+            canvas.style.backgroundColor = "";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 100)
 
-    setTimeout(() => {
+        setTimeout(() => {
+            canvas.style.backgroundColor = "white";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 150)
+
+        setTimeout(() => {
+            canvas.style.backgroundColor = "";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 250)
+    }else{
         canvas.style.backgroundColor = "";
-        canvas.classList.add("rain-bg");
-        ctx.clearRect(50, 50, 400, 300);
-    }, 250)
+    }
 }

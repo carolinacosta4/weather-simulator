@@ -19,8 +19,18 @@
 
 .snow-bg{
     background-color: #e8e9eb;
+    animation: rainToSnow 1s ease-in-out;
 }
 
 .flash-bg{
     background-color: #e8e9eb;
+}
+
+@keyframes rainToSnow {
+    0% {
+        background-color: #bde0fe;
+    }
+    100% {
+        background-color: #e8e9eb;
+    }
 }
