@@ -11,12 +11,6 @@ const W = canvas.width; const H = canvas.height;
             ctx.drawImage(cloud, cloudX2, 40, 180, 100);
         }
 
-
-        let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
-            canvas.classList.remove()
-            canvas.classList.add("sun-bg")
-        })
-
         let sunnyTree = new Image();
         sunnyTree.src = 'assets/tree_sunny.png';
         let ground = new Image();
