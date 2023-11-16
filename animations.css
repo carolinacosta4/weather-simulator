@@ -8,7 +8,6 @@
     flex-direction: row;
     justify-content: center;
 }
-
 .rain-bg{
     background-color: #393a41;
 }
@@ -19,4 +18,42 @@
 
 .snow-bg{
     background-color: #e8e9eb;
+}
+
+.icon {
+    height: 60px;
+    width: 60px;
+}
+
+.btn {
+    background-color: #fefee2;
+    border: none;
+    padding: 1.5%;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.btn:hover{
+    background-color: #f8f8ca;
+    cursor: pointer;
+    transition-duration: 1s;
+    /* c4fcc5 green */
+    /* ceb180 brown */
+    /* fefee2 yellow */
+}
+
+.btn {
+    transition-property: transform;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.btn#sun {
+    transition-property: transform;
+}
+
+.btn#sun:hover {
+    transform: rotate(30deg) scale(1.1);
 }
