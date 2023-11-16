@@ -26,6 +26,10 @@ let snowyGround = new Image();
 snowyGround.src = 'assets/ground_snow.jpg';
 let thunder = new Image()
 thunder.src = 'assets/flash.png'
+let sunnyTree = new Image();
+sunnyTree.src = 'assets/tree_sunny.png';
+let ground = new Image();
+ground.src = 'assets/ground_sunny.png';
 
 document.getElementById("rain").addEventListener("click", () => {
     canvas.classList.remove(`${lastWeather}-bg`);
@@ -58,6 +62,14 @@ snowButton.addEventListener("click", () => {
     initCloud();
     renderCloud();
     lastWeather = "snow"
+})
+
+let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
+    resetAnimation()
+    weather="sun"
+    canvas.classList.remove("rain-bg")
+    canvas.classList.remove("snow-bg")
+    canvas.classList.add("sun-bg")
 })
 
 function render() {
@@ -97,6 +109,13 @@ function render() {
         ctx.drawImage(cloud, 320, 40, 180, 100);
         ctx.drawImage(cloud, 160, 10, 180, 100);
         ctx.drawImage(cloud, 0, 40, 180, 100);
+    }else if (weather == "sun") {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(sun, 10, 10, 120, 122);
+        ctx.drawImage(ground, 0, 400, 500, 100);
+        ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+        ctx.drawImage(cloud, 320, 10, 180, 100);
+        ctx.drawImage(cloud, 160, 40, 180, 100);
     }
     window.requestAnimationFrame(render);
 }
