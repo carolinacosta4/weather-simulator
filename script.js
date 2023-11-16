@@ -67,9 +67,9 @@ snowButton.addEventListener("click", () => {
 let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
     resetAnimation()
     weather="sun"
-    canvas.classList.remove("rain-bg")
-    canvas.classList.remove("snow-bg")
-    canvas.classList.add("sun-bg")
+    canvas.classList.remove(`${lastWeather}-bg`);
+    canvas.classList.add(`${lastWeather}-${weather}-bg`);
+    lastWeather = "sun"
 })
 
 function render() {

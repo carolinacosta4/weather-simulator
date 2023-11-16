@@ -8,6 +8,11 @@
     flex-direction: row;
     justify-content: center;
 }
+
+.sun-bg{
+    background-color: #bde0fe;
+}
+
 .rain-bg{
     background-color: #393a41;
 }
