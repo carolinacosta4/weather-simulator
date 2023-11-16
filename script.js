@@ -11,6 +11,8 @@ let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
 let waterLevel = 0;
+let velocity = 0
+let flashInterval
 
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
@@ -22,30 +24,38 @@ let snowyTree = new Image();
 snowyTree.src = 'assets/tree_snow.png';
 let snowyGround = new Image();
 snowyGround.src = 'assets/ground_snow.jpg';
+let thunder = new Image()
+thunder.src = 'assets/flash.png'
 
 document.getElementById("rain").addEventListener("click", () => {
     resetAnimation()
     weather = "rain"
+    velocity = 0
     ctx.clearRect(0, 0, W, H);
     raindrops = [];
     canvas.classList.remove("snow-bg");
     canvas.classList.remove("sun-bg");
     canvas.classList.add("rain-bg");
     initRain();
+    // render()
     setTimeout(render, 2000);
     ctx.drawImage(rainyTree, 140, 192, 200, 208);
+    ctx.drawImage(thunder, 50, 50)
     initCloud()
     renderCloud()
+    flashInterval = setInterval(flashEffect, 3000)
 })
 
 let snowButton = document.getElementById("snow");
 snowButton.addEventListener("click", () => {
     resetAnimation()
     weather = "snow"
+    velocity = 0
     canvas.classList.remove("sun-bg");
     canvas.classList.remove("rain-bg");
     canvas.classList.add("snow-bg");
     snowFlakes(); // init
+    // render()
     setTimeout(render, 2000);
     ctx.drawImage(snowyTree, 140, 192, 200, 208);
     initCloud();
@@ -53,9 +63,8 @@ snowButton.addEventListener("click", () => {
 })
 
 function render() {
+    ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
-        ctx.clearRect(0, 0, W, H);
-
         ctx.drawImage(rainyTree, 140, 192, 200, 208);
         ctx.drawImage(sun, 10, 10, 120, 122);
 
@@ -75,8 +84,6 @@ function render() {
         ctx.drawImage(cloud, 160, 10, 180, 100);
         ctx.drawImage(cloud, 0, 40, 180, 100);
     }else if(weather == "snow"){
-        //erase the Canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
         ctx.drawImage(snowyTree, 140, 192, 200, 208);
 
@@ -103,9 +110,9 @@ function initRain() {
         let xInit = Math.random() * W;
         let yInit = 100;
         let length = Math.random() * 20 + 10;
-        let speed = Math.random() * 5 + 2;
+        velocity = Math.random() * 5 + 2;
 
-        raindrops.push(new Rain(xInit, yInit, -length, length, speed, color));
+        raindrops.push(new Rain(xInit, yInit, -length, length, velocity, color));
     }
 }
 
@@ -121,7 +128,7 @@ function snowFlakes(){
         let yInit = 100;
 
         //random velocity
-        let velocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005);
+        velocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005);
 
         // x, y, r, v, c
         allSnowFlakes.push(new Flake(xInit, yInit, radius, velocity, color))
@@ -169,5 +176,28 @@ function resetAnimation() {
     allSnowFlakes = [];
     clouds = [];
     waterLevel = 0;
+    velocity = 0
     ctx.clearRect(0, 0, W, H);
+}
+
+function flashEffect(){
+    canvas.style.backgroundColor = "white";
+    ctx.drawImage(thunder, 200, 200)
+    setTimeout(() => {
+        canvas.style.backgroundColor = "";
+        canvas.classList.add("rain-bg");
+        ctx.clearRect(50, 50, 400, 300);
+    }, 100)
+
+    setTimeout(() => {
+        canvas.style.backgroundColor = "white";
+        canvas.classList.add("rain-bg");
+        ctx.clearRect(50, 50, 400, 300);
+    }, 150)
+
+    setTimeout(() => {
+        canvas.style.backgroundColor = "";
+        canvas.classList.add("rain-bg");
+        ctx.clearRect(50, 50, 400, 300);
+    }, 250)
 }
