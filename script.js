@@ -11,8 +11,9 @@ let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
 let waterLevel = 0;
-let velocity = 0
-let lastWeather = "sun"
+let velocity = 0;
+let lastWeather = "sun";
+let snowLevel = 0;
 let lastLastWeather = "sun"
 
 let rainyTree = new Image();
@@ -69,7 +70,9 @@ snowButton.addEventListener("click", () => {
     lastWeather = "snow"
 })
 
-let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
+let sunnyBtn = document.getElementById("sun")
+sunnyBtn.addEventListener("click", () => {
+    resetAnimation()
     weather="sun"
     canvas.classList.remove(`${lastWeather}-bg`);
     canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
@@ -109,7 +112,11 @@ function render() {
         allSnowFlakes.forEach(function (flake) {
             flake.draw();
             flake.update();
+            snowLevel = flake.snowLevel()
         });
+
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 450 - snowLevel, W, snowLevel);
 
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
         ctx.drawImage(cloud, 320, 40, 180, 100);
@@ -199,6 +206,7 @@ function resetAnimation() {
     allSnowFlakes = [];
     clouds = [];
     waterLevel = 0;
+    snowLevel = 0;
     velocity = 0
     ctx.clearRect(0, 0, W, H);
 }
