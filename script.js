@@ -12,7 +12,7 @@ let allSnowFlakes = new Array();
 let clouds = [];
 let waterLevel = 0;
 let velocity = 0
-let flashInterval
+let lastWeather = "sun"
 
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
@@ -28,22 +28,20 @@ let thunder = new Image()
 thunder.src = 'assets/flash.png'
 
 document.getElementById("rain").addEventListener("click", () => {
+    canvas.classList.remove(`${lastWeather}-bg`);
     resetAnimation()
     weather = "rain"
     velocity = 0
     ctx.clearRect(0, 0, W, H);
     raindrops = [];
-    canvas.classList.remove("snow-bg");
-    canvas.classList.remove("sun-bg");
-    canvas.classList.add("rain-bg");
+    canvas.classList.add(`${lastWeather}-${weather}-bg`);
     initRain();
-    // render()
     setTimeout(render, 2000);
     ctx.drawImage(rainyTree, 140, 192, 200, 208);
-    // ctx.drawImage(thunder, 50, 50)
     initCloud()
     renderCloud()
     flashInterval = setInterval(flashEffect, 3000)
+    lastWeather = "rain"
 })
 
 let snowButton = document.getElementById("snow");
@@ -51,16 +49,15 @@ snowButton.addEventListener("click", () => {
     resetAnimation()
     weather = "snow"
     velocity = 0
-    canvas.classList.remove("sun-bg");
-    canvas.classList.remove("rain-bg");
-    canvas.classList.remove("flash-bg");
-    canvas.classList.add("snow-bg");
+    canvas.classList.remove(`${lastWeather}-bg`);
+    canvas.classList.add(`${lastWeather}-${weather}-bg`);
     snowFlakes(); // init
     // render()
     setTimeout(render, 2000);
     ctx.drawImage(snowyTree, 140, 192, 200, 208);
     initCloud();
     renderCloud();
+    lastWeather = "snow"
 })
 
 function render() {

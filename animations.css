@@ -13,22 +13,88 @@
     background-color: #393a41;
 }
 
-.sun-bg{
-    background-color: #bde0fe;
-}
-
-.snow-bg{
-    background-color: #e8e9eb;
-    animation: rainToSnow 1s ease-in-out;
-}
-
 .flash-bg{
     background-color: #e8e9eb;
 }
 
-@keyframes rainToSnow {
+.sun-rain-bg{
+    background-color: #393a41;
+    animation: sunToRain 1s ease-in-out;
+}
+
+.sun-snow-bg{
+    background-color: #e8e9eb;
+    animation: sunToSnow 1s ease-in-out;
+}
+
+.snow-sun-bg{
+    background-color: #bde0fe;
+    animation: snowToSun 1s ease-in-out;
+}
+
+.rain-sun-bg{
+    background-color: #bde0fe;
+    animation: rainToSun 1s ease-in-out;
+}
+
+.rain-snow-bg{
+    background-color: #e8e9eb;
+    animation: rainToSnow 1s ease-in-out;
+}
+
+.snow-rain-bg{
+    background-color: #393a41;
+    animation: snowToRain 1s ease-in-out;
+}
+
+@keyframes sunToRain {
     0% {
         background-color: #bde0fe;
+    }
+    100% {
+        background-color: #393a41;
+    }
+}
+
+@keyframes sunToSnow {
+    0% {
+        background-color: #bde0fe;
+    }
+    100% {
+        background-color: #e8e9eb;
+    }
+}
+
+@keyframes snowToSun {
+    0% {
+        background-color: #e8e9eb;
+    }
+    100% {
+        background-color: #bde0fe;
+    }
+}
+
+@keyframes rainToSun {
+    0% {
+        background-color: #393a41;
+    }
+    100% {
+        background-color: #bde0fe;
+    }
+}
+
+@keyframes snowToRain {
+    0% {
+        background-color: #e8e9eb;
+    }
+    100% {
+        background-color: #393a41;
+    }
+}
+
+@keyframes rainToSnow {
+    0% {
+        background-color: #393a41;
     }
     100% {
         background-color: #e8e9eb;
