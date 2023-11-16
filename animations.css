@@ -8,16 +8,101 @@
     flex-direction: row;
     justify-content: center;
 }
-.rain-bg{
-    background-color: #393a41;
-}
 
 .sun-bg{
     background-color: #bde0fe;
 }
 
-.snow-bg{
+.rain-bg{
+    background-color: #393a41;
+}
+
+.flash-bg{
     background-color: #e8e9eb;
+}
+
+.sun-rain-bg{
+    background-color: #393a41;
+    animation: sunToRain 1s ease-in-out;
+}
+
+.sun-snow-bg{
+    background-color: #e8e9eb;
+    animation: sunToSnow 1s ease-in-out;
+}
+
+.snow-sun-bg{
+    background-color: #bde0fe;
+    animation: snowToSun 1s ease-in-out;
+}
+
+.rain-sun-bg{
+    background-color: #bde0fe;
+    animation: rainToSun 1s ease-in-out;
+}
+
+.rain-snow-bg{
+    background-color: #e8e9eb;
+    animation: rainToSnow 1s ease-in-out;
+}
+
+.snow-rain-bg{
+    background-color: #393a41;
+    animation: snowToRain 1s ease-in-out;
+}
+
+@keyframes sunToRain {
+    0% {
+        background-color: #bde0fe;
+    }
+    100% {
+        background-color: #393a41;
+    }
+}
+
+@keyframes sunToSnow {
+    0% {
+        background-color: #bde0fe;
+    }
+    100% {
+        background-color: #e8e9eb;
+    }
+}
+
+@keyframes snowToSun {
+    0% {
+        background-color: #e8e9eb;
+    }
+    100% {
+        background-color: #bde0fe;
+    }
+}
+
+@keyframes rainToSun {
+    0% {
+        background-color: #393a41;
+    }
+    100% {
+        background-color: #bde0fe;
+    }
+}
+
+@keyframes snowToRain {
+    0% {
+        background-color: #e8e9eb;
+    }
+    100% {
+        background-color: #393a41;
+    }
+}
+
+@keyframes rainToSnow {
+    0% {
+        background-color: #393a41;
+    }
+    100% {
+        background-color: #e8e9eb;
+    }
 }
 
 .icon {
@@ -37,9 +122,42 @@
     background-color: #f8f8ca;
     cursor: pointer;
     transition-duration: 1s;
-    /* c4fcc5 green */
-    /* ceb180 brown */
-    /* fefee2 yellow */
+
+}
+
+.btn {
+    transition-property: transform;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.btn#sun {
+    transition-property: transform;
+}
+
+.btn#sun:hover {
+    transform: rotate(30deg) scale(1.1);
+}
+
+.icon {
+    height: 60px;
+    width: 60px;
+}
+
+.btn {
+    background-color: #fefee2;
+    border: none;
+    padding: 1.5%;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.btn:hover{
+    background-color: #f8f8ca;
+    cursor: pointer;
+    transition-duration: 1s;
 }
 
 .btn {

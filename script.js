@@ -11,6 +11,8 @@ let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
 let waterLevel = 0;
+let velocity = 0
+let lastWeather = "sun"
 
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
@@ -22,52 +24,57 @@ let snowyTree = new Image();
 snowyTree.src = 'assets/tree_snow.png';
 let snowyGround = new Image();
 snowyGround.src = 'assets/ground_snow.jpg';
+let thunder = new Image()
+thunder.src = 'assets/flash.png'
 let sunnyTree = new Image();
 sunnyTree.src = 'assets/tree_sunny.png';
 let ground = new Image();
 ground.src = 'assets/ground_sunny.png';
 
 document.getElementById("rain").addEventListener("click", () => {
+    canvas.classList.remove(`${lastWeather}-bg`);
     resetAnimation()
     weather = "rain"
+    velocity = 0
     ctx.clearRect(0, 0, W, H);
     raindrops = [];
-    canvas.classList.remove("snow-bg");
-    canvas.classList.remove("sun-bg");
-    canvas.classList.add("rain-bg");
+    canvas.classList.add(`${lastWeather}-${weather}-bg`);
     initRain();
     setTimeout(render, 2000);
     ctx.drawImage(rainyTree, 140, 192, 200, 208);
     initCloud()
     renderCloud()
+    flashInterval = setInterval(flashEffect, 3000)
+    lastWeather = "rain"
 })
 
 let snowButton = document.getElementById("snow");
 snowButton.addEventListener("click", () => {
     resetAnimation()
     weather = "snow"
-    canvas.classList.remove("sun-bg");
-    canvas.classList.remove("rain-bg");
-    canvas.classList.add("snow-bg");
+    velocity = 0
+    canvas.classList.remove(`${lastWeather}-bg`);
+    canvas.classList.add(`${lastWeather}-${weather}-bg`);
     snowFlakes(); // init
+    // render()
     setTimeout(render, 2000);
     ctx.drawImage(snowyTree, 140, 192, 200, 208);
     initCloud();
     renderCloud();
+    lastWeather = "snow"
 })
 
 let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
     resetAnimation()
     weather="sun"
-    canvas.classList.remove("rain-bg")
-    canvas.classList.remove("snow-bg")
-    canvas.classList.add("sun-bg")
+    canvas.classList.remove(`${lastWeather}-bg`);
+    canvas.classList.add(`${lastWeather}-${weather}-bg`);
+    lastWeather = "sun"
 })
 
 function render() {
+    ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
-        ctx.clearRect(0, 0, W, H);
-
         ctx.drawImage(rainyTree, 140, 192, 200, 208);
         ctx.drawImage(sun, 10, 10, 120, 122);
 
@@ -87,8 +94,6 @@ function render() {
         ctx.drawImage(cloud, 160, 10, 180, 100);
         ctx.drawImage(cloud, 0, 40, 180, 100);
     }else if(weather == "snow"){
-        //erase the Canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
         ctx.drawImage(snowyTree, 140, 192, 200, 208);
 
@@ -122,9 +127,9 @@ function initRain() {
         let xInit = Math.random() * W;
         let yInit = 100;
         let length = Math.random() * 20 + 10;
-        let speed = Math.random() * 5 + 2;
+        velocity = Math.random() * 5 + 2;
 
-        raindrops.push(new Rain(xInit, yInit, -length, length, speed, color));
+        raindrops.push(new Rain(xInit, yInit, -length, length, velocity, color));
     }
 }
 
@@ -140,7 +145,7 @@ function snowFlakes(){
         let yInit = 100;
 
         //random velocity
-        let velocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005);
+        velocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005);
 
         // x, y, r, v, c
         allSnowFlakes.push(new Flake(xInit, yInit, radius, velocity, color))
@@ -188,5 +193,32 @@ function resetAnimation() {
     allSnowFlakes = [];
     clouds = [];
     waterLevel = 0;
+    velocity = 0
     ctx.clearRect(0, 0, W, H);
+}
+
+function flashEffect(){
+    if(weather == "rain"){
+        canvas.style.backgroundColor = "white";
+        ctx.drawImage(thunder, 200, 200)
+        setTimeout(() => {
+            canvas.style.backgroundColor = "";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 100)
+
+        setTimeout(() => {
+            canvas.style.backgroundColor = "white";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 150)
+
+        setTimeout(() => {
+            canvas.style.backgroundColor = "";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 250)
+    }else{
+        canvas.style.backgroundColor = "";
+    }
 }
