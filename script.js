@@ -6,14 +6,18 @@ const canvas = document.querySelector('#myCanvas');
 const ctx = canvas.getContext("2d");
 const W = canvas.width; const H = canvas.height;
 
-let weather = ""
+
+let weather = "sun" // TT
 let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
-let waterLevel = 0;
-let velocity = 0;
 let lastWeather = "sun";
 let snowLevel = 0;
+let lastLastWeather = "sun"
+let rainVelocity = 0;
+let snowVelocity = 0;
+let flashInterval = ""
+let isAnimating = false
 
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
@@ -25,43 +29,51 @@ let snowyTree = new Image();
 snowyTree.src = 'assets/tree_snow.png';
 let snowyGround = new Image();
 snowyGround.src = 'assets/ground_snow.jpg';
-let thunder = new Image()
-thunder.src = 'assets/flash.png'
 let sunnyTree = new Image();
 sunnyTree.src = 'assets/tree_sunny.png';
 let ground = new Image();
 ground.src = 'assets/ground_sunny.png';
 
 document.getElementById("rain").addEventListener("click", () => {
-    canvas.classList.remove(`${lastWeather}-bg`);
-    resetAnimation()
-    weather = "rain"
-    velocity = 0
-    ctx.clearRect(0, 0, W, H);
-    raindrops = [];
-    canvas.classList.add(`${lastWeather}-${weather}-bg`);
-    initRain();
-    setTimeout(render, 2000);
-    ctx.drawImage(rainyTree, 140, 192, 200, 208);
-    initCloud()
-    renderCloud()
-    flashInterval = setInterval(flashEffect, 3000)
-    lastWeather = "rain"
+    // if (!isAnimating) { 
+    //     isAnimating = true;
+        resetAnimation()
+        weather = "rain"
+        ctx.clearRect(0, 0, W, H);
+        raindrops = [];
+        canvas.classList.remove(`${lastWeather}-bg`);
+        canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
+        canvas.classList.add(`${lastWeather}-${weather}-bg`);
+        canvas.classList.add(`${weather}-bg`);
+        initRain();
+        // // TT
+        // setTimeout(() => {
+        //     render()
+        //     isAnimating = false;
+        // }, 2000)
+        ctx.drawImage(rainyTree, 140, 192, 200, 208);
+        // initCloud()
+        // renderCloud()
+        flashInterval = setInterval(flashEffect, 3000)
+        lastLastWeather = lastWeather
+        lastWeather = "rain"
+    // }
 })
 
 let snowButton = document.getElementById("snow");
 snowButton.addEventListener("click", () => {
     resetAnimation()
     weather = "snow"
-    velocity = 0
     canvas.classList.remove(`${lastWeather}-bg`);
+    canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
+    canvas.classList.add(`${weather}-bg`);
     snowFlakes(); // init
-    // render()
     setTimeout(render, 2000);
     ctx.drawImage(snowyTree, 140, 192, 200, 208);
     initCloud();
     renderCloud();
+    lastLastWeather = lastWeather
     lastWeather = "snow"
 })
 
@@ -70,22 +82,32 @@ sunnyBtn.addEventListener("click", () => {
     resetAnimation()
     weather="sun"
     canvas.classList.remove(`${lastWeather}-bg`);
+    canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
+    canvas.classList.add(`${weather}-bg`);
+    ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+    ctx.drawImage(ground, 0, 400, 500, 100);
+    ctx.drawImage(sun, 10, 10, 120, 122);
+    ctx.drawImage(cloud, 320, 10, 180, 100);
+    ctx.drawImage(cloud, 160, 40, 180, 100);
+    lastLastWeather = lastWeather
     lastWeather = "sun"
 })
 
 function render() {
+    let waterLevel = 0;
+    // console.log("RENDER ", weather)
     ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
         ctx.drawImage(rainyTree, 140, 192, 200, 208);
         ctx.drawImage(sun, 10, 10, 120, 122);
 
         initRain();
-
+        // console.log("Rain", raindrops.length)
         raindrops.forEach(function (drop) {
-            waterLevel = drop.waterLevel()
             drop.draw();
             drop.update();
+            waterLevel += drop.getWaterLevel()
         });
 
         ctx.fillStyle = "blue";
@@ -125,18 +147,21 @@ function render() {
     }
     window.requestAnimationFrame(render);
 }
+render(); // // TT
 
 function initRain() {
+    rainVelocity = Math.random() * 5 + 2
     for (let i = 0; i < 1; i++) {
         let color = "blue";
 
         let xInit = Math.random() * W;
         let yInit = 100;
         let length = Math.random() * 20 + 10;
-        velocity = Math.random() * 5 + 2;
+        rainVelocity = Math.random() * 5 + 2
 
-        raindrops.push(new Rain(xInit, yInit, -length, length, velocity, color));
+        raindrops.push(new Rain(xInit, yInit, -length, length, rainVelocity, color, 0));
     }
+    // console.log('initRain() ', rainVelocity);
 }
 
 // INIT
@@ -151,10 +176,10 @@ function snowFlakes(){
         let yInit = 100;
 
         //random velocity
-        velocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005);
+        snowVelocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005)
 
         // x, y, r, v, c
-        allSnowFlakes.push(new Flake(xInit, yInit, radius, velocity, color))
+        allSnowFlakes.push(new Flake(xInit, yInit, radius, snowVelocity, color))
     }
 }
 
@@ -195,19 +220,21 @@ function renderCloud() {
 }
 
 function resetAnimation() {
+    // console.log('reseting....');
+    clearInterval(flashInterval);
     raindrops = [];
     allSnowFlakes = [];
     clouds = [];
-    waterLevel = 0;
     snowLevel = 0;
-    velocity = 0
+    rainVelocity = 0;
+    snowVelocity = 0;
     ctx.clearRect(0, 0, W, H);
+    // console.log('Animation reset complete.', rainVelocity, raindrops);
 }
 
 function flashEffect(){
     if(weather == "rain"){
         canvas.style.backgroundColor = "white";
-        ctx.drawImage(thunder, 200, 200)
         setTimeout(() => {
             canvas.style.backgroundColor = "";
             canvas.classList.add("rain-bg");
@@ -217,7 +244,6 @@ function flashEffect(){
         setTimeout(() => {
             canvas.style.backgroundColor = "white";
             canvas.classList.add("rain-bg");
-            ctx.clearRect(50, 50, 400, 300);
         }, 150)
 
         setTimeout(() => {

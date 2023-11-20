@@ -17,6 +17,10 @@
     background-color: #393a41;
 }
 
+.snow-bg{
+    background-color: #e8e9eb;
+}
+
 .flash-bg{
     background-color: #e8e9eb;
 }
@@ -24,7 +28,7 @@
 .sun-rain-bg{
     background-color: #393a41;
     animation: sunToRain 1s ease-in-out;
-}
+} 
 
 .sun-snow-bg{
     background-color: #e8e9eb;
