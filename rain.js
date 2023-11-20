@@ -1,13 +1,12 @@
-let waterLevel = 0;
-
 export default class Rain {
-    constructor(x, y, dY, length, speed, color) {
+    constructor(x, y, dY, length, speed, color, waterLevel) {
         this.x = x;
         this.y = y;
         this.dY = dY;
         this.length = length;
         this.speed = speed;
         this.color = color;
+        this.waterLevel = waterLevel
     }
 
     draw() {
@@ -25,11 +24,11 @@ export default class Rain {
             this.y = 398;
             this.speed = 0;
             this.length = 2;
-            waterLevel += 0.1;
+            this.waterLevel += 0.1;
         }
     }
 
-    waterLevel(){
-        return waterLevel;
+    getWaterLevel(){
+        return this.waterLevel;
     }
 }

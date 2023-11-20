@@ -25,37 +25,31 @@
     background-color: #e8e9eb;
 }
 
-/* funciona */
 .sun-rain-bg{
     background-color: #393a41;
     animation: sunToRain 1s ease-in-out;
 } 
 
-/* funciona */
 .sun-snow-bg{
     background-color: #e8e9eb;
     animation: sunToSnow 1s ease-in-out;
 }
 
-/* funciona */
 .snow-sun-bg{
     background-color: #bde0fe;
     animation: snowToSun 1s ease-in-out;
 }
 
-/* não funciona */
 .rain-sun-bg{
     background-color: #bde0fe;
     animation: rainToSun 1s ease-in-out;
 }
 
-/* não funciona */
 .rain-snow-bg{
     background-color: #e8e9eb;
     animation: rainToSnow 1s ease-in-out;
 }
 
-/* funciona */
 .snow-rain-bg{
     background-color: #393a41;
     animation: snowToRain 1s ease-in-out;
