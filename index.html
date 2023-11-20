@@ -12,9 +12,15 @@
             Your browser does not support HTML5 Canvas.
         </canvas><br></div>
     <div class="buttons">
-        <button id="rain">CHUVA</button>
-        <button id="sun">SOL</button>
-        <button id="snow">NEVE</button>
+        <button class="btn" id="rain">
+            <img class="icon" src="./assets/icon_rain.png" alt="Rain icon image">
+        </button>
+        <button class="btn" id="sun">
+            <img class="icon" src="./assets/icon_sun.png" alt="Sun icon image">
+        </button>
+        <button class="btn" id="snow">
+            <img class="icon" src="./assets/icon_snow.png" alt="Snow icon image">
+        </button>
     </div>
 
     <script>
@@ -25,12 +31,21 @@
         
         let cloud = new Image();
         cloud.src = 'assets/cloud.png';
-        let cloudX1 = 320
-        let cloudX2 = 160
-        cloud.onload = function(){
-            ctx.drawImage(cloud, cloudX1, 10, 180, 100);
-            ctx.drawImage(cloud, cloudX2, 40, 180, 100);
-        }
+        let sunnyTree = new Image();
+        sunnyTree.src = 'assets/tree_sunny.png';
+        let ground = new Image();
+        ground.src = 'assets/ground_sunny.png';
+        let sun = new Image();
+        sun.src = 'assets/sun.png';
+
+        window.onload = function () {
+            ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+            ctx.drawImage(ground, 0, 400, 500, 100);
+            ctx.drawImage(sun, 10, 10, 120, 122);
+            ctx.drawImage(cloud, 320, 10, 180, 100);
+            ctx.drawImage(cloud, 160, 40, 180, 100);
+        };
+
     </script>
     <script type="module" src="snow.js"></script>
     <script type="module" src="rain.js"></script>
