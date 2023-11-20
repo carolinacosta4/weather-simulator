@@ -32,4 +32,10 @@ export default class Rain {
     waterLevel(){
         return waterLevel;
     }
+
+    reduceWater() {
+        if (waterLevel > 0) {
+            waterLevel -= 0.1;    
+        }
+    }
 }

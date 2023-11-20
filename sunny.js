@@ -18,12 +18,6 @@ const W = canvas.width; const H = canvas.height;
         let sun = new Image();
         sun.src = 'assets/sun.png';
 
-    function sunny(){
-            ctx.drawImage(sunnyTree, 140, 192, 200, 208);
-            ctx.drawImage(ground, 0, 400, 500, 100);
-            ctx.drawImage(sun, 10, 10, 120, 122);
-        }
-
         window.onload = function () {
             sunny()
         };

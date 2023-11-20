@@ -11,7 +11,7 @@ let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
 let waterLevel = 0;
-
+let raining = true;
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
 let rainGround = new Image();
@@ -56,12 +56,15 @@ snowButton.addEventListener("click", () => {
     renderCloud();
 })
 
-let sunnyBtn = document.getElementById("sun").addEventListener("click", () => {
-    resetAnimation()
+let sunnyBtn = document.getElementById("sun");
+sunnyBtn.addEventListener("click", () => {
     weather="sun"
+    Rain.reduceWater();
     canvas.classList.remove("rain-bg")
     canvas.classList.remove("snow-bg")
     canvas.classList.add("sun-bg")
+    setTimeout(render,2000)
+    renderCloud();
 })
 
 function render() {
@@ -173,6 +176,12 @@ function renderCloud() {
     }else if(weather == "snow"){
         ctx.drawImage(snowyTree, 140, 192, 200, 208);
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
+    }else if (weather=="sun") {
+        ctx.drawImage(sun, 10, 10, 120, 122);
+        ctx.drawImage(ground, 0, 400, 500, 100);
+        ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+        ctx.drawImage(cloud, 320, 10, 180, 100);
+        ctx.drawImage(cloud, 160, 40, 180, 100);
     }
 
     clouds.forEach(function (cloud) {
