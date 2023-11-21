@@ -4,26 +4,57 @@
 <head>
     <title>Simulador meteorologia</title>
     <link rel="stylesheet" href="animations.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap');
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <canvas class="sun-bg" id="myCanvas" width="500" height="500">
-            Your browser does not support HTML5 Canvas.
-        </canvas><br></div>
-    <div class="buttons">
-        <button class="btn" id="rain">
-            <img class="icon" src="./assets/icon_rain.png" alt="Rain icon image">
-        </button>
-        <button class="btn" id="sun">
-            <img class="icon" src="./assets/icon_sun.png" alt="Sun icon image">
-        </button>
-        <button class="btn" id="snow">
-            <img class="icon" src="./assets/icon_snow.png" alt="Snow icon image">
-        </button>
+    <div class="app">
+        <div class="container">
+            <canvas class="sun-bg" id="myCanvas" width="500" height="500">
+                Your browser does not support HTML5 Canvas.
+            </canvas><br>
+        </div>
+        <div class="buttons">
+            <button class="btn" id="rain">
+                <img class="icon" src="./assets/icon_rain.png" alt="Rain icon image">
+            </button>
+            <button class="btn" id="sun">
+                <img class="icon" src="./assets/icon_sun.png" alt="Sun icon image">
+            </button>
+            <button class="btn" id="snow">
+                <img class="icon" src="./assets/icon_snow.png" alt="Snow icon image">
+            </button>
+        </div>
+    </div>
+
+    <div class="initialDisplay" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <h2 id="title" class="flicker">WEATHER SIMULATOR</h2>
+                <button id="btnPlay" onclick="closeModal()">
+                    PLAY
+                </button>
+        </div>
+      </div>
     </div>
 
     <script>
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(){
+            modal.style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", openModal())
+
+
         const canvas = document.querySelector('#myCanvas');
         const ctx = canvas.getContext("2d");
         const W = canvas.width; const H = canvas.height;
@@ -42,7 +73,6 @@
             ctx.drawImage(ground, 0, 400, 500, 100);
             ctx.drawImage(sun, 10, 10, 120, 122);
         };
-
     </script>
     <script type="module" src="snow.js"></script>
     <script type="module" src="rain.js"></script>
