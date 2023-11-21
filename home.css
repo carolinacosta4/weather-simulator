@@ -1,0 +1,40 @@
+#btnPlay{
+    border: none;
+    background-color: #1d2951;
+}
+
+#btnPlay:hover{
+    cursor: pointer;
+}
+
+
+body{
+    background-color: #1d2951;
+}
+
+#initialDisplay{
+    background-color: #1d2951;
+    display: flex;
+    flex-direction: column;
+}
+
+.flicker {
+    font-size: 4.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 1rem auto;
+    color: #fffefe61;
+    background: -webkit-gradient(linear, left top, right top, from(#bde0fe), to(#1d1c1c), color-stop(0.8, #bde0fe)) no-repeat;
+    background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #bde0fe)) no-repeat;
+    background-size: 110px 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: flick 1.5s infinite;
+  }
+  @keyframes flick {
+    0% {
+      background-position: top left;
+    }
+    100% {
+      background-position: top right;
+    }
+  }

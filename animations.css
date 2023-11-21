@@ -1,3 +1,8 @@
+@font-face {
+    font-family: pixelsFont;
+    src: url(./assets/dogicapixelbold.otf);
+  }
+
 .container{
     display: grid;
     justify-content: center;
@@ -175,3 +180,67 @@
 .btn#sun:hover {
     transform: rotate(30deg) scale(1.1);
 }
+
+
+/* TESTE NOVA VERSÃO */
+
+#myModal{
+    background-color: #1d2951;
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#btnPlay{
+    border: none;
+    background-color: #bde0fe;
+    font-family: 'pixelsFont';
+    font-size: 3em;
+    color: #1d2951;
+    margin-top: 50px;
+    margin-bottom: -15px;
+    width: 6em;
+    height: 2em;
+    border-radius: 40px;
+}
+
+#btnPlay:hover{
+    cursor: pointer;
+}
+
+.modal-content{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flicker {
+    font-size: 4.5rem;
+    font-family: 'pixelsFont';
+    margin: 1rem auto;
+    color: #fffefe61;
+    background: -webkit-gradient(linear, left top, right top, from(#bde0fe), to(#1d1c1c), color-stop(0.8, #bde0fe)) no-repeat;
+    background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #bde0fe)) no-repeat;
+    background-size: 110px 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: flick 1.5s infinite;
+  }
+  @keyframes flick {
+    0% {
+      background-position: top left;
+    }
+    100% {
+      background-position: top right;
+    }
+  }
