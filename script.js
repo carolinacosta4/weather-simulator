@@ -77,6 +77,18 @@ snowButton.addEventListener("click", () => {
     lastWeather = "snow"
 })
 
+let sunRotationAngle = 0;
+
+function rotateSun() {
+    sunRotationAngle += 5; // Ajuste o valor para a velocidade desejada de rotação
+    ctx.clearRect(0, 0, W, H); // Limpa o canvas
+    ctx.save(); // Salva o estado do contexto
+    ctx.translate(70, 70); // Move o ponto de rotação para o centro do sol
+    ctx.rotate((Math.PI / 180) * sunRotationAngle); // Rotaciona o contexto
+    ctx.drawImage(sun, -60, -60, 120, 122); // Desenha o sol
+    ctx.restore(); // Restaura o estado do contexto
+}
+
 let sunnyBtn = document.getElementById("sun")
 sunnyBtn.addEventListener("click", () => {
     resetAnimation()
@@ -85,14 +97,22 @@ sunnyBtn.addEventListener("click", () => {
     canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
     canvas.classList.add(`${weather}-bg`);
+    sunny();
+    rotateSun();
+    lastLastWeather = lastWeather
+    lastWeather = "sun"
+    
+})
+
+function sunny(){
+    ctx.clearRect(0, 0, W, H);
+    rotateSun();
     ctx.drawImage(sunnyTree, 140, 192, 200, 208);
     ctx.drawImage(ground, 0, 400, 500, 100);
     ctx.drawImage(sun, 10, 10, 120, 122);
     ctx.drawImage(cloud, 320, 10, 180, 100);
     ctx.drawImage(cloud, 160, 40, 180, 100);
-    lastLastWeather = lastWeather
-    lastWeather = "sun"
-})
+}
 
 function render() {
     let waterLevel = 0;
@@ -235,4 +255,28 @@ function resetAnimation() {
     rainVelocity = 0;
     snowVelocity = 0;
     ctx.clearRect(0, 0, W, H);
+}
+
+function flashEffect(){
+    if(weather == "rain"){
+        canvas.style.backgroundColor = "white";
+        setTimeout(() => {
+            canvas.style.backgroundColor = "";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 100)
+
+        setTimeout(() => {
+            canvas.style.backgroundColor = "white";
+            canvas.classList.add("rain-bg");
+        }, 150)
+
+        setTimeout(() => {
+            canvas.style.backgroundColor = "";
+            canvas.classList.add("rain-bg");
+            ctx.clearRect(50, 50, 400, 300);
+        }, 250)
+    }else{
+        canvas.style.backgroundColor = "";
+    }
 }
