@@ -19,5 +19,4 @@ const W = canvas.width; const H = canvas.height;
         sun.src = 'assets/sun.png';
 
         window.onload = function () {
-            sunny()
         };
