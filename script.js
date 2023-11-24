@@ -83,10 +83,12 @@ sunnyBtn.addEventListener("click", () => {
     canvas.classList.remove(`${lastWeather}-bg`);
     canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
-    canvas.classList.add(`${weather}-bg`);
-    rotateSunWithAnimation()
+    canvas.classList.add(`${weather}-bg`)
+    rotateSunWithAnimation();
     lastLastWeather = lastWeather
     lastWeather = "sun"
+    reduceRainWaterLevel();
+    
 })
 
 function rotateSunWithAnimation() {
@@ -95,10 +97,9 @@ function rotateSunWithAnimation() {
     function rotateSun() {
         ctx.save()
         ctx.clearRect(0, 0, W, H); // Limpa o canvas
-        ctx.translate(64, 55)
+        ctx.translate(70, 70)
         ctx.rotate((Math.PI / 180) * sunRotationAngle); // Rotaciona o contexto
-        ctx.drawImage(sun,-55,-45, 120, 122); // Desenha o sol  
-
+        ctx.drawImage(sun,-60,-60, 120, 122); // Desenha o sol  
          sunRotationAngle += 0.5
         ctx.restore();
         ctx.drawImage(sunnyTree, 140, 192, 200, 208);
@@ -275,5 +276,21 @@ function flashEffect() {
         }, 250)
     } else {
         canvas.style.backgroundColor = "";
+    }
+}
+rotateSunWithAnimation()
+
+function reduceRainWaterLevel() {
+    if (weather == "rain") {
+        // Reduza gradualmente o nível da água da chuva
+        let reduceInterval = setInterval(() => {
+            raindrops.forEach((drop) => {
+                drop.reduceWater();
+            });
+
+            if (raindrops[0].getWaterLevel() <= 0) {
+                clearInterval(reduceInterval);
+            }
+        }, 500); // Ajuste o intervalo conforme necessário
     }
 }
