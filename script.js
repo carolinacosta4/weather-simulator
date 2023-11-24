@@ -98,6 +98,8 @@ sunnyBtn.addEventListener("click", () => {
 
 function render() {
     let waterLevel = 0;
+    let snowLevel = 0;
+
     ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
         ctx.drawImage(rainyTree, 140, 192, 200, 208);
@@ -116,15 +118,12 @@ function render() {
         ctx.drawImage(rainGround, 0, 400, 500, 100);
     }else if(weather == "snow"){
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
-    
-
         setTimeout(snowFlakes, 3000);
 
-        //draw & update all balls
         allSnowFlakes.forEach(function (flake) {
             flake.draw();
             flake.update();
-            snowLevel = flake.snowLevel()
+            snowLevel += flake.getSnowLevel();
         });
 
         ctx.fillStyle = "white";
@@ -154,22 +153,17 @@ function initRain() {
     raindrops.push(new Rain(xInit, yInit, -length, length, rainVelocity, color, 0));
 }
 
-// INIT
+// INIT SNOWFLAKES
 function snowFlakes(){
     for (let i = 0; i < 1; i++) {
         let color = '#ffffff';
-        //random size
         let radius = 2 + Math.floor(Math.random() * (6 - 2 + 1) + 2);
 
-        // random position (above the Canvas)
         let xInit = radius + Math.random() * (W - 2 * radius);
         let yInit = 100;
 
-        //random velocity
-        snowVelocity = 1 + Math.floor(Math.random() * (0.01 - 0.005 + 1) + 0.005)
-
-        // x, y, r, v, c
-        allSnowFlakes.push(new Flake(xInit, yInit, radius, snowVelocity, color))
+        snowVelocity = Math.random() * 1 + 0.5
+        allSnowFlakes.push(new Flake(xInit, yInit, radius, snowVelocity, color, 0))
     }
 }
 
