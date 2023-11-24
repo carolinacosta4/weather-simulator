@@ -1,11 +1,11 @@
-let snowLevel = 0;
 export default class Flake {
-    constructor(x, y, radius, speed, color) {   
+    constructor(x, y, radius, speed, color, snowLevel) {   
         this.radius = radius;
         this.x = x; 
         this.y = y; 
         this.speed = speed;           
-        this.color = color;             
+        this.color = color;  
+        this.snowLevel = snowLevel           
     }
 
     

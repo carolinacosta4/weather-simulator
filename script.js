@@ -102,7 +102,6 @@ function render() {
 
     ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
-        ctx.drawImage(rainyTree, 140, 192, 200, 208);
         ctx.drawImage(sun, 10, 10, 120, 122);
 
         setTimeout(initRain, 3000)
@@ -116,6 +115,7 @@ function render() {
         ctx.fillRect(0, 450 - waterLevel, W, waterLevel);
 
         ctx.drawImage(rainGround, 0, 400, 500, 100);
+        ctx.drawImage(rainyTree, 140, 192, 200, 208);
     }else if(weather == "snow"){
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
         setTimeout(snowFlakes, 3000);
