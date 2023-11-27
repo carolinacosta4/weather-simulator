@@ -1,11 +1,11 @@
-let snowLevel = 0;
 export default class Flake {
-    constructor(x, y, radius, speed, color) {   
+    constructor(x, y, radius, speed, color, snowLevel) {   
         this.radius = radius;
         this.x = x; 
         this.y = y; 
         this.speed = speed;           
-        this.color = color;             
+        this.color = color;  
+        this.snowLevel = snowLevel           
     }
 
     
@@ -15,10 +15,8 @@ export default class Flake {
         if (this.y > 398) {
             this.y = 398;
             this.speed = 0;
-            snowLevel += 0.1;
+            this.snowLevel += 0.1;
         }
-        else
-            this.y += this.speed; 
     }
 
     draw() {
@@ -28,7 +26,7 @@ export default class Flake {
         ctx.fill();
     }
 
-    snowLevel(){
-        return snowLevel;
+    getSnowLevel(){
+        return this.snowLevel;
     }
 }
