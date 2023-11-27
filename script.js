@@ -89,16 +89,16 @@ sunnyBtn.addEventListener("click", () => {
     ctx.drawImage(sun, 10, 10, 120, 122);
     ctx.drawImage(cloud, 320, 10, 180, 100);
     ctx.drawImage(cloud, 160, 40, 180, 100);
+    //rotateSunWithAnimation()
     if(lastWeather != "sun"){
         initCloud()
     }
     lastLastWeather = lastWeather
     lastWeather = "sun"
-    reduceRainWaterLevel();
     
 })
 
-function rotateSunWithAnimation() {
+/*function rotateSunWithAnimation() {
     let sunRotationAngle = 0;
 
     function rotateSun() {
@@ -117,7 +117,7 @@ function rotateSunWithAnimation() {
     }
     rotateSun()
     
-}
+}*/
 
 function render() {
     let waterLevel = 0;
@@ -294,21 +294,5 @@ function flashEffect() {
         }, 250)
     } else {
         canvas.style.backgroundColor = "";
-    }
-}
-rotateSunWithAnimation()
-
-function reduceRainWaterLevel() {
-    if (weather == "rain") {
-        // Reduza gradualmente o nível da água da chuva
-        let reduceInterval = setInterval(() => {
-            raindrops.forEach((drop) => {
-                drop.reduceWater();
-            });
-
-            if (raindrops[0].getWaterLevel() <= 0) {
-                clearInterval(reduceInterval);
-            }
-        }, 500); // Ajuste o intervalo conforme necessário
     }
 }
