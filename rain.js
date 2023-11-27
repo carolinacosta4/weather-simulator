@@ -1,3 +1,7 @@
+const canvas = document.querySelector('#myCanvas');
+const ctx = canvas.getContext("2d");
+const W = canvas.width; const H = canvas.height;
+
 export default class Rain {
     constructor(x, y, dY, length, speed, color, waterLevel) {
         this.x = x;
@@ -20,8 +24,8 @@ export default class Rain {
 
     update() {
         this.y += this.speed;
-        if (this.y > 398){
-            this.y = 398;
+        if (this.y > 758){
+            this.y = 758;
             this.speed = 0;
             this.length = 2;
             this.waterLevel += 0.1;

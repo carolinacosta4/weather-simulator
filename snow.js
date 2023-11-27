@@ -1,3 +1,7 @@
+const canvas = document.querySelector('#myCanvas');
+const ctx = canvas.getContext("2d");
+const W = canvas.width; const H = canvas.height;
+
 export default class Flake {
     constructor(x, y, radius, speed, color, snowLevel) {   
         this.radius = radius;
@@ -12,8 +16,8 @@ export default class Flake {
     update() {
         this.y += this.speed;
 
-        if (this.y > 398) {
-            this.y = 398;
+        if (this.y > 758) {
+            this.y = 758;
             this.speed = 0;
             this.snowLevel += 0.1;
         }

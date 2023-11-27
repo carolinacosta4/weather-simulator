@@ -7,7 +7,7 @@ const ctx = canvas.getContext("2d");
 const W = canvas.width; const H = canvas.height;
 
 // MODAL INICIAL
-var modal = document.getElementById('myModal');
+let modal = document.getElementById('myModal');
 modal.style.display = 'none';
 
 function openModal() {
@@ -20,15 +20,12 @@ document.getElementById('btnPlay').addEventListener('click', () => {
 
 document.addEventListener("DOMContentLoaded", openModal())
 
-
 let weather = "sun" 
 let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
 let lastWeather = "sun";
 let lastLastWeather = "sun"
-let rainVelocity = 0;
-let snowVelocity = 0;
 let flashInterval = ""
 let sunRotationAngle = 0;
 
@@ -62,7 +59,7 @@ document.getElementById("rain").addEventListener("click", () => {
     }else{
         initRain()
     }
-    ctx.drawImage(rainyTree, 140, 192, 200, 208);
+    ctx.drawImage(rainyTree, 250, 402, 350, 358);
     initCloud();
     flashInterval = setInterval(flashEffect, 3000)
     lastLastWeather = lastWeather
@@ -83,7 +80,7 @@ snowButton.addEventListener("click", () => {
     }else{
         snowFlakes() // init
     }
-    ctx.drawImage(snowyTree, 140, 192, 200, 208);
+    ctx.drawImage(snowyTree, 250, 402, 350, 358);
     initCloud()
     lastLastWeather = lastWeather
     lastWeather = "snow"
@@ -98,11 +95,9 @@ sunnyBtn.addEventListener("click", () => {
     canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
     canvas.classList.add(`${weather}-bg`);
-    ctx.drawImage(sunnyTree, 140, 192, 200, 208);
-    ctx.drawImage(ground, 0, 400, 500, 100);
-    // ctx.drawImage(sun, 10, 10, 120, 122);
-    ctx.drawImage(cloud, 320, 10, 180, 100);
-    ctx.drawImage(cloud, 160, 40, 180, 100);
+    ctx.drawImage(sunnyTree, 250, 402, 350, 358);
+    ctx.drawImage(ground, 0, 760, 580, 150);
+    ctx.drawImage(ground, 540, 760, 580, 150);
     if(lastWeather != "sun"){
         initCloud()
     }
@@ -111,28 +106,22 @@ sunnyBtn.addEventListener("click", () => {
 })
 
 function rotateSunWithAnimation() {
-    // console.log("rotateSunWithAnimation", sunRotationAngle)
     ctx.save()
     ctx.clearRect(0, 0, W, H); // Limpa o canvas
-    ctx.translate(70, 70)
+    ctx.translate(126, 96)
     ctx.rotate((Math.PI / 180) * sunRotationAngle); // Rotaciona o contexto
-    ctx.drawImage(sun,-60,-60, 120, 122); // Desenha o sol  
+    ctx.drawImage(sun,-86,-86, 172, 172); // Desenha o sol  
     sunRotationAngle += 0.5
     ctx.restore();
-   // ctx.drawImage(sunnyTree, 140, 192, 200, 208);
-   // ctx.drawImage(ground, 0, 400, 500, 100);
-    // ctx.drawImage(cloud, 320, 10, 180, 100);
-    // ctx.drawImage(cloud, 160, 40, 180, 100); 
 }
 
 function render() {
     let waterLevel = 0;
     let snowLevel = 0;
 
-    // ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
         ctx.clearRect(0, 0, W, H);
-        ctx.drawImage(sun, 10, 10, 120, 122);
+        ctx.drawImage(sun, 40, 10, 172, 172);
 
         setTimeout(initRain, 3000)
         raindrops.forEach(function (drop) {
@@ -142,13 +131,15 @@ function render() {
         });
 
         ctx.fillStyle = "blue";
-        ctx.fillRect(0, 450 - waterLevel, W, waterLevel);
+        ctx.fillRect(0, 820 - waterLevel, W, waterLevel);
 
-        ctx.drawImage(rainGround, 0, 400, 500, 100);
-        ctx.drawImage(rainyTree, 140, 192, 200, 208);
+        ctx.drawImage(rainyTree, 250, 402, 350, 358);
+        ctx.drawImage(rainGround, 0, 760, 580, 150);   
+        ctx.drawImage(rainGround, 540, 760, 580, 150);
     }else if(weather == "snow"){
         ctx.clearRect(0, 0, W, H);
-        ctx.drawImage(snowyGround, 0, 400, 500, 100);
+        ctx.drawImage(snowyGround, 0, 760, 580, 150);
+        ctx.drawImage(snowyGround, 540, 760, 580, 150);
         setTimeout(snowFlakes, 3000);
 
         allSnowFlakes.forEach(function (flake) {
@@ -158,15 +149,15 @@ function render() {
         });
 
         ctx.fillStyle = "white";
-        ctx.fillRect(0, 450 - snowLevel, W, snowLevel);
+        ctx.fillRect(0, 820 - snowLevel, W, snowLevel);
 
-        ctx.drawImage(snowyGround, 0, 400, 500, 100);
+        ctx.drawImage(snowyGround, 0, 760, 580, 150);
+        ctx.drawImage(snowyGround, 540, 760, 580, 150);
     }else if (weather == "sun") {
-        // setTimeout(rotateSunWithAnimation, 3000)
         rotateSunWithAnimation()
-        // ctx.drawImage(sun, 10, 10, 120, 122);
-        ctx.drawImage(ground, 0, 400, 500, 100);
-        ctx.drawImage(sunnyTree, 140, 192, 200, 208);     
+        ctx.drawImage(sunnyTree, 250, 402, 350, 358);
+        ctx.drawImage(ground, 0, 760, 580, 150);
+        ctx.drawImage(ground, 540, 760, 580, 150);
     }
     window.requestAnimationFrame(render);
 }
@@ -178,9 +169,9 @@ function initRain() {
     let color = "blue";
 
     let xInit = Math.random() * W;
-    let yInit = 100;
+    let yInit = 140;
     let length = Math.random() * 20 + 10;
-    rainVelocity = Math.random() * 5 + 2
+    let rainVelocity = Math.random() * 5 + 2
 
     raindrops.push(new Rain(xInit, yInit, -length, length, rainVelocity, color, 0));
 }
@@ -192,9 +183,9 @@ function snowFlakes(){
         let radius = 2 + Math.floor(Math.random() * (6 - 2 + 1) + 2);
 
         let xInit = radius + Math.random() * (W - 2 * radius);
-        let yInit = 100;
+        let yInit = 140;
 
-        snowVelocity = Math.random() * 1 + 0.5
+        let snowVelocity = Math.random() * 1 + 0.5
         allSnowFlakes.push(new Flake(xInit, yInit, radius, snowVelocity, color, 0))
     }
 }
@@ -203,64 +194,74 @@ function initCloud() {
     if(weather != "sun"){
         if((lastWeather == "snow" && weather == "rain") || (lastWeather == "rain" && weather == "snow")){
             let startX1 = 0; 
-            let startX2 = 160; 
-            let startX3 = 320;
+            let startX2 = 220; 
+            let startX3 = 440;
+            let startX4 = 660;
             let stopX1 = 0; 
-            let stopX2 = 160;
-            let stopX3 = 320;
+            let stopX2 = 220;
+            let stopX3 = 440;
+            let stopX4 = 660;
 
-            let y1 = 40;
-            let y2 = 10;
+            let y1 = 60;
+            let y2 = 20;
 
             clouds.push(new Cloud(startX1, stopX1, y1, 1));
             clouds.push(new Cloud(startX2, stopX2, y2, 1));
             clouds.push(new Cloud(startX3, stopX3, y1, 1));
+            clouds.push(new Cloud(startX4, stopX4, y2, 1));
         }else{
-            let startX1 = 500; 
-            let startX2 = 660; 
-            let startX3 = 820;
+            let startX1 = 920; 
+            let startX2 = 1140; 
+            let startX3 = 1360;
+            let startX4 = 1580;
             let stopX1 = 0; 
-            let stopX2 = 160;
-            let stopX3 = 320;
+            let stopX2 = 220;
+            let stopX3 = 440;
+            let stopX4 = 660;
 
-            let y1 = 40;
-            let y2 = 10;
+            let y1 = 60;
+            let y2 = 20;
 
             clouds.push(new Cloud(startX1, stopX1, y1, 1));
             clouds.push(new Cloud(startX2, stopX2, y2, 1));
             clouds.push(new Cloud(startX3, stopX3, y1, 1));
+            clouds.push(new Cloud(startX4, stopX4, y2, 1));
         }
     }else{
         let startX1 = 0; 
-        let startX2 = 160; 
-        let startX3 = 320;
-        let stopX1 = 500; 
-        let stopX2 = 500;
-        let stopX3 = 500;
+        let startX2 = 220; 
+        let startX3 = 440;
+        let startX4 = 660;
+        let stopX1 = 920; 
+        let stopX2 = 920;
+        let stopX3 = 920;
+        let stopX4 = 920;
 
-        let y1 = 40;
-        let y2 = 10;
+        let y1 = 60;
+        let y2 = 20;
 
         clouds.push(new Cloud(startX1, stopX1, y1, -1));
         clouds.push(new Cloud(startX2, stopX2, y2, -1));
         clouds.push(new Cloud(startX3, stopX3, y1, -1));
+        clouds.push(new Cloud(startX4, stopX4, y2, -1));
     }
         
 }
 
 function renderCloud() {
     if (weather == "rain") {
-        ctx.drawImage(rainyTree, 140, 192, 200, 208);
-        ctx.drawImage(sun, 10, 10, 120, 122);
-        ctx.drawImage(rainGround, 0, 400, 500, 100);
+        ctx.drawImage(rainyTree, 250, 402, 350, 358);
+        ctx.drawImage(rainGround, 0, 760, 580, 150); 
+        ctx.drawImage(rainGround, 540, 760, 580, 150); 
+        ctx.drawImage(sun, 40, 10, 172, 172); 
     } else if (weather == "snow") {
-        ctx.drawImage(snowyTree, 140, 192, 200, 208);
-        ctx.drawImage(snowyGround, 0, 400, 500, 100);
+        ctx.drawImage(snowyTree, 250, 402, 350, 358); 
+        ctx.drawImage(snowyGround, 0, 760, 580, 150);
+        ctx.drawImage(snowyGround, 540, 760, 580, 150);
     } else if (weather == "sun") {
-        // ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // ctx.drawImage(sun, 10, 10, 120, 122);
-        ctx.drawImage(ground, 0, 400, 500, 100);
-        ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+        ctx.drawImage(sunnyTree, 250, 402, 350, 358); 
+        ctx.drawImage(ground, 0, 760, 580, 150);
+        ctx.drawImage(ground, 540, 760, 580, 150);
     }
 
     clouds.forEach(function (cloud) {
@@ -276,8 +277,6 @@ function resetAnimation() {
     raindrops = [];
     allSnowFlakes = [];
     clouds = [];
-    rainVelocity = 0;
-    snowVelocity = 0;
     ctx.clearRect(0, 0, W, H);
 }
 
