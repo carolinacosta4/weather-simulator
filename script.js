@@ -6,17 +6,16 @@ const canvas = document.querySelector('#myCanvas');
 const ctx = canvas.getContext("2d");
 const W = canvas.width; const H = canvas.height;
 
-
 let weather = "sun" 
 let raindrops = [];
 let allSnowFlakes = new Array();
 let clouds = [];
 let lastWeather = "sun";
-let snowLevel = 0;
 let lastLastWeather = "sun"
 let rainVelocity = 0;
 let snowVelocity = 0;
 let flashInterval = ""
+let sunRotationAngle = 0;
 
 let rainyTree = new Image();
 rainyTree.src = 'assets/tree_rain.png';
@@ -86,7 +85,7 @@ sunnyBtn.addEventListener("click", () => {
     canvas.classList.add(`${weather}-bg`);
     ctx.drawImage(sunnyTree, 140, 192, 200, 208);
     ctx.drawImage(ground, 0, 400, 500, 100);
-    ctx.drawImage(sun, 10, 10, 120, 122);
+    // ctx.drawImage(sun, 10, 10, 120, 122);
     ctx.drawImage(cloud, 320, 10, 180, 100);
     ctx.drawImage(cloud, 160, 40, 180, 100);
     if(lastWeather != "sun"){
@@ -94,37 +93,30 @@ sunnyBtn.addEventListener("click", () => {
     }
     lastLastWeather = lastWeather
     lastWeather = "sun"
-    reduceRainWaterLevel();
-    
 })
 
 function rotateSunWithAnimation() {
-    let sunRotationAngle = 0;
-
-    function rotateSun() {
-        ctx.save()
-        ctx.clearRect(0, 0, W, H); // Limpa o canvas
-        ctx.translate(70, 70)
-        ctx.rotate((Math.PI / 180) * sunRotationAngle); // Rotaciona o contexto
-        ctx.drawImage(sun,-60,-60, 120, 122); // Desenha o sol  
-         sunRotationAngle += 0.5
-        ctx.restore();
-        ctx.drawImage(sunnyTree, 140, 192, 200, 208);
-        ctx.drawImage(ground, 0, 400, 500, 100);
-        ctx.drawImage(cloud, 320, 10, 180, 100);
-        ctx.drawImage(cloud, 160, 40, 180, 100);
-        requestAnimationFrame(rotateSun)
-    }
-    rotateSun()
-    
+    // console.log("rotateSunWithAnimation", sunRotationAngle)
+    ctx.save()
+    ctx.clearRect(0, 0, W, H); // Limpa o canvas
+    ctx.translate(70, 70)
+    ctx.rotate((Math.PI / 180) * sunRotationAngle); // Rotaciona o contexto
+    ctx.drawImage(sun,-60,-60, 120, 122); // Desenha o sol  
+    sunRotationAngle += 0.5
+    ctx.restore();
+   // ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+   // ctx.drawImage(ground, 0, 400, 500, 100);
+    // ctx.drawImage(cloud, 320, 10, 180, 100);
+    // ctx.drawImage(cloud, 160, 40, 180, 100); 
 }
 
 function render() {
     let waterLevel = 0;
     let snowLevel = 0;
 
-    ctx.clearRect(0, 0, W, H);
+    // ctx.clearRect(0, 0, W, H);
     if(weather == "rain"){
+        ctx.clearRect(0, 0, W, H);
         ctx.drawImage(sun, 10, 10, 120, 122);
 
         setTimeout(initRain, 3000)
@@ -140,6 +132,7 @@ function render() {
         ctx.drawImage(rainGround, 0, 400, 500, 100);
         ctx.drawImage(rainyTree, 140, 192, 200, 208);
     }else if(weather == "snow"){
+        ctx.clearRect(0, 0, W, H);
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
         setTimeout(snowFlakes, 3000);
 
@@ -154,10 +147,11 @@ function render() {
 
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
     }else if (weather == "sun") {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(sun, 10, 10, 120, 122);
+        // setTimeout(rotateSunWithAnimation, 3000)
+        rotateSunWithAnimation()
+        // ctx.drawImage(sun, 10, 10, 120, 122);
         ctx.drawImage(ground, 0, 400, 500, 100);
-        ctx.drawImage(sunnyTree, 140, 192, 200, 208);
+        ctx.drawImage(sunnyTree, 140, 192, 200, 208);     
     }
     window.requestAnimationFrame(render);
 }
@@ -248,8 +242,8 @@ function renderCloud() {
         ctx.drawImage(snowyTree, 140, 192, 200, 208);
         ctx.drawImage(snowyGround, 0, 400, 500, 100);
     } else if (weather == "sun") {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(sun, 10, 10, 120, 122);
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.drawImage(sun, 10, 10, 120, 122);
         ctx.drawImage(ground, 0, 400, 500, 100);
         ctx.drawImage(sunnyTree, 140, 192, 200, 208);
     }
@@ -267,7 +261,6 @@ function resetAnimation() {
     raindrops = [];
     allSnowFlakes = [];
     clouds = [];
-    snowLevel = 0;
     rainVelocity = 0;
     snowVelocity = 0;
     ctx.clearRect(0, 0, W, H);
@@ -296,7 +289,6 @@ function flashEffect() {
         canvas.style.backgroundColor = "";
     }
 }
-rotateSunWithAnimation()
 
 function reduceRainWaterLevel() {
     if (weather == "rain") {

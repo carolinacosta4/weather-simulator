@@ -52,7 +52,7 @@
             modal.style.display = "none";
         }
 
-        document.addEventListener("DOMContentLoaded", openModal())
+        // document.addEventListener("DOMContentLoaded", openModal())
 
 
         const canvas = document.querySelector('#myCanvas');
@@ -66,13 +66,13 @@
         sunnyTree.src = 'assets/tree_sunny.png';
         let ground = new Image();
         ground.src = 'assets/ground_sunny.png';
-        let sun = new Image();
-        sun.src = 'assets/sun.png';
+        // let sun = new Image();
+        // sun.src = 'assets/sun.png';
 
         window.onload = function () {
             ctx.drawImage(sunnyTree, 140, 192, 200, 208);
             ctx.drawImage(ground, 0, 400, 500, 100);
-            ctx.drawImage(sun, 10, 10, 120, 122);
+            // ctx.drawImage(sun, 10, 10, 120, 122);
         };
     </script>
     <script type="module" src="snow.js"></script>
