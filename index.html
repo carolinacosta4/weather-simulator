@@ -33,7 +33,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
             <h2 id="title" class="flicker">WEATHER SIMULATOR</h2>
-                <button id="btnPlay" onclick="closeModal()">
+                <button id="btnPlay">
                     PLAY
                 </button>
         </div>
@@ -41,20 +41,6 @@
     </div>
 
     <script>
-        var modal = document.getElementById('myModal');
-        modal.style.display = "none";
-
-        function openModal() {
-            modal.style.display = 'flex';
-        }
-
-        function closeModal(){
-            modal.style.display = "none";
-        }
-
-        // document.addEventListener("DOMContentLoaded", openModal())
-
-
         const canvas = document.querySelector('#myCanvas');
         const ctx = canvas.getContext("2d");
         const W = canvas.width; const H = canvas.height;

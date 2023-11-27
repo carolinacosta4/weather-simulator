@@ -6,6 +6,21 @@ const canvas = document.querySelector('#myCanvas');
 const ctx = canvas.getContext("2d");
 const W = canvas.width; const H = canvas.height;
 
+// MODAL INICIAL
+var modal = document.getElementById('myModal');
+modal.style.display = 'none';
+
+function openModal() {
+    modal.style.display = 'flex';
+}
+
+document.getElementById('btnPlay').addEventListener('click', () => {
+    modal.style.display = 'none';
+})
+
+document.addEventListener("DOMContentLoaded", openModal())
+
+
 let weather = "sun" 
 let raindrops = [];
 let allSnowFlakes = new Array();
