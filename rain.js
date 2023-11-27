@@ -31,4 +31,10 @@ export default class Rain {
     getWaterLevel(){
         return this.waterLevel;
     }
+
+    reduceWater() {
+        if (this.waterLevel > 0) {
+            this.waterLevel -= 0.1;
+        }
+    }
 }

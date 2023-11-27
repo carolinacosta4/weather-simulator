@@ -27,5 +27,4 @@ const W = canvas.width; const H = canvas.height;
     }
 
         window.onload = function () {
-            sunny()
         };
