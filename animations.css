@@ -3,6 +3,13 @@
     src: url(./assets/dogicapixelbold.otf);
   }
 
+.app{
+    display: grid;
+    grid-template-columns: 900px 10em;
+    column-gap: 2em;
+    justify-content: center;
+}
+
 .container{
     display: grid;
     justify-content: center;
@@ -10,7 +17,7 @@
 
 .buttons{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -125,6 +132,8 @@
     padding: 1.5%;
     border-radius: 50%;
     margin: 10px;
+    width: 10em;
+    height: 10em;
 }
 
 .btn:hover{

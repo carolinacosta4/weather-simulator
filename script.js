@@ -165,7 +165,7 @@ sunnyBtn.addEventListener("click", () => {
 function rotateSunWithAnimation() {
     ctx.save()
     ctx.clearRect(0, 0, W, H); // Limpa o canvas
-    ctx.translate(126, 96)
+    ctx.translate(126, 106)
     ctx.rotate((Math.PI / 180) * sunRotationAngle); // Rotaciona o contexto
     ctx.drawImage(sun,-86,-86, 172, 172); // Desenha o sol  
     sunRotationAngle += 0.5
@@ -178,7 +178,7 @@ function render() {
 
     if(weather == "rain"){
         ctx.clearRect(0, 0, W, H);
-        ctx.drawImage(sun, 40, 10, 172, 172);
+        ctx.drawImage(sun, 40, 20, 172, 172);
 
         setTimeout(initRain, 3000)
         raindrops.forEach(function (drop) {
@@ -310,7 +310,7 @@ function renderCloud() {
         ctx.drawImage(rainyTree, 250, 402, 350, 358);
         ctx.drawImage(rainGround, 0, 760, 580, 150); 
         ctx.drawImage(rainGround, 540, 760, 580, 150); 
-        ctx.drawImage(sun, 40, 10, 172, 172); 
+        ctx.drawImage(sun, 40, 20, 172, 172); 
     } else if (weather == "snow") {
         ctx.drawImage(snowyTree, 250, 402, 350, 358); 
         ctx.drawImage(snowyGround, 0, 760, 580, 150);
