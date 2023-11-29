@@ -114,7 +114,7 @@ snowButton.addEventListener("click", () => {
         setTimeout(function(){
             audioSnow.play()
         }
-        ,10000)
+        ,9000)
     }else{
         snowFlakes() // init
         if(audioRain || audioThunder){
@@ -123,7 +123,10 @@ snowButton.addEventListener("click", () => {
         }
         
         audioSnow.load()
-        audioSnow.play()
+        setTimeout(function(){
+            audioSnow.play()
+        }
+        ,9000)
     }
     ctx.drawImage(snowyTree, 250, 402, 350, 358);
     initCloud()
