@@ -16,6 +16,10 @@ function openModal() {
 
 document.getElementById('btnPlay').addEventListener('click', () => {
     modal.style.display = 'none';
+    setTimeout(function(){
+        audioSummer.play()
+    }
+    ,300)
 })
 
 document.addEventListener("DOMContentLoaded", openModal())
@@ -46,6 +50,11 @@ ground.src = 'assets/ground_sunny.png';
 let cloud = new Image();
 cloud.src = 'assets/cloud.png';
 
+let audioThunder = new Audio('assets/audio_thunder.mp3')
+let audioSummer = new Audio('assets/audio_summer.mp3')
+let audioSnow = new Audio('assets/audio_snow.wav')
+let audioRain = new Audio('assets/audio_rain.wav')
+
 document.getElementById("rain").addEventListener("click", () => {
     resetAnimation()
     weather = "rain"
@@ -54,10 +63,28 @@ document.getElementById("rain").addEventListener("click", () => {
     canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
     canvas.classList.add(`${weather}-bg`);
+    audioRain.load()
     if(lastWeather != "snow"){
+        if (audioSummer){
+            audioSummer.pause()
+        }
+        if (audioRain){
+            audioRain.pause()
+        }
         setTimeout(initRain, 3000);
+        setTimeout(function(){
+            audioRain.play()
+        }
+        ,3000)
     }else{
+        if (audioSnow){
+            audioSnow.pause()
+        }
         initRain()
+        setTimeout(function(){
+            audioRain.play()
+        }
+        ,3000)
     }
     ctx.drawImage(rainyTree, 250, 402, 350, 358);
     initCloud();
@@ -75,10 +102,31 @@ snowButton.addEventListener("click", () => {
     canvas.classList.remove(`${lastLastWeather}-${lastWeather}-bg`);
     canvas.classList.add(`${lastWeather}-${weather}-bg`);
     canvas.classList.add(`${weather}-bg`);
+    audioSnow.load()
     if(lastWeather != "rain"){
+        if (audioSummer){
+            audioSummer.pause()
+        }
+        if (audioSnow){
+            audioSnow.pause()
+        }
         setTimeout(snowFlakes, 3000); // init
+        setTimeout(function(){
+            audioSnow.play()
+        }
+        ,9000)
     }else{
         snowFlakes() // init
+        if(audioRain || audioThunder){
+            audioRain.pause()
+            audioThunder.pause()
+        }
+        
+        audioSnow.load()
+        setTimeout(function(){
+            audioSnow.play()
+        }
+        ,9000)
     }
     ctx.drawImage(snowyTree, 250, 402, 350, 358);
     initCloud()
@@ -100,9 +148,21 @@ sunnyBtn.addEventListener("click", () => {
     ctx.drawImage(ground, 540, 760, 580, 150);
     if(lastWeather != "sun"){
         initCloud()
+        if (audioRain){
+            audioRain.pause()
+        }
+        if (audioSnow){
+            audioSnow.pause()
+        }
+        
     }
     lastLastWeather = lastWeather
     lastWeather = "sun"
+    audioSummer.load()
+    setTimeout(function(){
+        audioSummer.play()
+    }
+    ,1000)
 })
 
 function rotateSunWithAnimation() {
@@ -292,6 +352,7 @@ function flashEffect() {
         setTimeout(() => {
             canvas.style.backgroundColor = "white";
             canvas.classList.add("rain-bg");
+            audioThunder.play()
         }, 150)
 
         setTimeout(() => {
